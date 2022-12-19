@@ -1,14 +1,7 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# In[1]:
-
-
 from sys import path
 
 path.append(r'../../src')
 
-import time
 import os
 import torch
 import json
@@ -16,15 +9,11 @@ import tqdm
 import copy
 import random
 import numpy as np
-import argparse
 import pickle as pkl
 import networkx as nx
-import networkx.algorithms as nxalg
 
 from pycorenlp import StanfordCoreNLP
-from data_utils import SymbolsManager
 from data_utils import convert_to_tree
-from collections import OrderedDict
 from pythonds.basic.stack import Stack
 
 ## Some options about constituency tree construction :
@@ -33,17 +22,14 @@ from pythonds.basic.stack import Stack
 # * whether link word nodes
 # * whether split sentence
 
-
-# In[2]:
-
-
 _cut_root_node = True
 _cut_line_node = True
 _cut_pos_node = False
 _link_word_nodes = False
 _split_sentence = False
-source_data_dir = r"G:\My Drive\research\Graph2Tree\data\TextData" + "\\"
-output_data_dir = r"G:\My Drive\research\Graph2Tree\data\GraphConstruction\\"+"\\"
+
+source_data_dir = "../TextData/"
+output_data_dir = "../GraphConstruction/"
 batch_size = 30
 min_freq = 2
 max_vocab_size = 15000
@@ -52,9 +38,6 @@ seed = 123
 random.seed(seed)
 np.random.seed(seed)
 torch.manual_seed(seed)
-
-
-# In[24]:
 
 
 class InputPreprocessor(object):
@@ -73,7 +56,7 @@ class InputPreprocessor(object):
             'ssplit.isOneSentence': True,
             'outputFormat': 'json'
         })
-        output = json.loads(output)
+
         snt = output['sentences'][0]["tokens"]
         depency = output['sentences'][0]["basicDependencies"]
         data["tok"] = []
@@ -92,45 +75,31 @@ class InputPreprocessor(object):
         return data
 
 
-# In[25]:
-
-
 def get_preparsed_file():
-    if not os.path.exists("./file_for_parsing_aqua.pkl"):
+    if not os.path.exists("./file_for_parsing.pkl"):
         file_for_parsing = {}
         processor_tmp = InputPreprocessor()
 
-        with open(source_data_dir + "all_aqua.txt", "r", encoding="utf-8") as f:
+        with open(source_data_dir + "all.txt", "r") as f:
             lines = f.readlines()
             for l in tqdm.tqdm(lines):
                 str_ = l.strip().split('\t')[0]
                 file_for_parsing[str_] = processor_tmp.featureExtract(str_)
 
-        pkl.dump(file_for_parsing, open("./file_for_parsing_aqua.pkl", "wb"))
+        pkl.dump(file_for_parsing, open("./file_for_parsing.pkl", "wb"))
     else:
-        preparsed_file = pkl.load(open("./file_for_parsing_aqua.pkl", "rb"))
+        preparsed_file = pkl.load(open("./file_for_parsing.pkl", "rb"))
     return preparsed_file
 
 
-# In[26]:
-
-
 preparsed_file = get_preparsed_file()
-
-
-# In[28]:
-
-
-len(preparsed_file)
-
-
-# In[34]:
 
 
 class Node():
     def __init__(self, word, type_, id_):
         # word: this node's text
         self.word = word
+
         # type=0 for word nodes, 1 for constituency nodes, 2 for dependency nodes(if they exist)
         self.type = type_
 
@@ -458,19 +427,16 @@ def generate_batch_graph(output_file, string_batch):
                 batch_vocab.append(w)
     return batch_vocab
 
-def test_data_preprocess():
+
+def test_data_preprocess(line):
     data = []
     managers = pkl.load(open("{}/map.pkl".format(output_data_dir), "rb"))
     word_manager, form_manager = managers
-    with open("{}/{}.txt".format(source_data_dir, "all_aqua"), "r", encoding="utf-8") as f:
-        for line in f:
-            l_list = line.split("\t")
-            w_list = l_list[0].strip().split(' ')
-            # r_list = form_manager.get_symbol_idx_for_list(l_list[1].strip().split(' '))
-            eq_temp = "x=x+1"
-            r_list = form_manager.get_symbol_idx_for_list(eq_temp.strip().split(' '))
-            cur_tree = convert_to_tree(r_list, 0, len(r_list), form_manager)
-            data.append((w_list, r_list, cur_tree))
+    l_list = line.split("\t")
+    w_list = l_list[0].strip().split(' ')
+    r_list = form_manager.get_symbol_idx_for_list(l_list[1].strip().split(' '))
+    cur_tree = convert_to_tree(r_list, 0, len(r_list), form_manager)
+    data.append((w_list, r_list, cur_tree))
     out_datafile = "{}/test.pkl".format(output_data_dir)
     with open(out_datafile, "wb") as out_data:
         pkl.dump(data, out_data)
@@ -491,7 +457,5 @@ def test_data_preprocess():
         new_vocab = generate_batch_graph(output_file=out_graphfile, string_batch=input_batch)
 
 
-# In[30]:
+test_data_preprocess("a bee has 2 legs . how many legs do 1 bees have ?	x = ( 2 * 1 )")
 
-
-test_data_preprocess()
