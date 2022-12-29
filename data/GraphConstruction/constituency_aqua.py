@@ -11,6 +11,7 @@ import random
 import numpy as np
 import pickle as pkl
 import networkx as nx
+import sys
 
 from pycorenlp import StanfordCoreNLP
 from data_utils import convert_to_tree
@@ -457,5 +458,7 @@ def test_data_preprocess(line):
         new_vocab = generate_batch_graph(output_file=out_graphfile, string_batch=input_batch)
 
 
-test_data_preprocess("a bee has 2 legs . how many legs do 1 bees have ?	x = ( 2 * 1 )")
-
+if  len(sys.argv) != 2:
+    test_data_preprocess("a bee has 2 legs . how many legs do 1 bees have ?	x = ( 2 * 1 )")
+else:
+    test_data_preprocess(sys.argv[1]+'\t'+'x = ( 2 * 1 )')

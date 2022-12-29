@@ -1,15 +1,5 @@
-import copy
-import torch
-import random
-import warnings
-import argparse
-import data_utils
-import graph_utils
-import numpy as np
-import pickle as pkl
 import pandas as pd
 
-from tree import Tree
 from graph2tree import *
 
 warnings.filterwarnings('ignore')

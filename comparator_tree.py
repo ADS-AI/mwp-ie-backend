@@ -30,12 +30,6 @@ def isDecimal(value):
         return False
 
 
-df = pd.read_pickle('data/TextData/test_df.pkl')
-
-print(df.head())
-
-tree = df['tree']
-
 
 def if_variable(str):
     return str.isalpha()
@@ -65,23 +59,30 @@ def compare_tree(root1, root2):
     return False
 
 
-lst = []
-for i in range(len(tree)):
-    if len(tree[i]) == 0:
-        lst.append([])
-        continue
-    if i % 100 == 0:
-        print(i)
-    tmp = []
-    for j in range(len(tree)):
-        if len(tree[j]) == 0:
+if(__name__ == "__main__"):
+    df = pd.read_pickle('data/TextData/test_df.pkl')
+
+    print(df.head())
+
+    tree = df['tree']
+
+    lst = []
+    for i in range(len(tree)):
+        if len(tree[i]) == 0:
+            lst.append([])
             continue
-        if compare_tree(tree[i][0], tree[j][0]) and compare_tree(tree[i][1], tree[j][1]):
-            tmp.append(j)
-    lst.append(tmp)
+        if i % 100 == 0:
+            print(i)
+        tmp = []
+        for j in range(len(tree)):
+            if len(tree[j]) == 0:
+                continue
+            if compare_tree(tree[i][0], tree[j][0]) and compare_tree(tree[i][1], tree[j][1]):
+                tmp.append(j)
+        lst.append(tmp)
 
-df['common'] = lst
+    df['common'] = lst
 
-df.to_pickle('data/TextData/test_df_final.pkl')
+    df.to_pickle('data/TextData/test_df_final.pkl')
 
-print(df.head())
+    print(df.head())

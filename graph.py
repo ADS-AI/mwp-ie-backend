@@ -16,7 +16,6 @@ def read_text_data_from_file(file_name):
 #
 # df = pd.DataFrame(data, columns=['ques', 'eqn'])
 
-df = pd.read_csv('output_test.csv')
 
 class nptr:
     def __init__(self, c):
@@ -107,21 +106,25 @@ def eq_parser(eq):
         eq = eq.split('=')
         eq_lhs = '( ' + eq[0] + ' )'
         eq_rhs = '( ' + eq[1] + ' )'
-        # print(eq_lhs, eq_rhs)
+        print(eq_lhs, eq_rhs)
         return [build(eq_lhs), build(eq_rhs)]
     except:
         print(eq)
         return []
 
-tree = df['eqn'].apply(eq_parser)
 
-df['tree'] = tree
+if (__name__ == '__main__'):
+    df = pd.read_csv('output_test.csv')
+
+    tree = df['eqn'].apply(eq_parser)
+
+    df['tree'] = tree
 
 
-# pandas save dataframe to file
-df.to_pickle('data/TextData/test_df.pkl')
+    # pandas save dataframe to file
+    df.to_pickle('data/TextData/test_df.pkl')
 
-# pandas read dataframe from file
-df = pd.read_pickle('data/TextData/test_df.pkl')
+    # pandas read dataframe from file
+    df = pd.read_pickle('data/TextData/test_df.pkl')
 
-print(df.head())
+    print(df.head())
