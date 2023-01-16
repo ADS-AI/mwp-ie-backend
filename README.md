@@ -77,10 +77,10 @@ Shucheng Li, Lingfei Wu, Shiwei Feng, Fangli Xu, Fengyuan Xu and Sheng Zhong, **
 
 
 ## sample test questions
-a florist had 3 roses . if she sold 2 of them and then later picked 1 more , how many roses would she have ?
-mrs . hilt bought 2 pizzas . each pizza had 1 slices . how many total slices of pizza did she have ?
-the length of a rectangular field is 1 meters . this is 2 meters less than twice the width . find the width .
-juan ran 1 miles at 2 miles per hour . how long did juan run ?
-seven times a number added to 1 amounts to 3 less than the product of 2 and the number .
-sandy has 1 dozen books . fred has 2 times more books than sandy . how many books does fred have ?
-a vase can hold 2 flowers . if you had 3 carnations and 1 roses , how many vases would you need to hold the flowers ?
+1. a florist had 3 roses . if she sold 2 of them and then later picked 1 more , how many roses would she have ?
+2. mrs . hilt bought 2 pizzas . each pizza had 1 slices . how many total slices of pizza did she have ?
+3. the length of a rectangular field is 1 meters . this is 2 meters less than twice the width . find the width .
+4. juan ran 1 miles at 2 miles per hour . how long did juan run ?
+5. seven times a number added to 1 amounts to 3 less than the product of 2 and the number .
+6. sandy has 1 dozen books . fred has 2 times more books than sandy . how many books does fred have ?
+7. a vase can hold 2 flowers . if you had 3 carnations and 1 roses , how many vases would you need to hold the flowers ?
