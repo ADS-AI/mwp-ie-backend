@@ -1,4 +1,4 @@
-# Graph2Tree
+# MWPRanker
 
 Graph2Tree aims to automatically learn the mapping between structured input like graphs and output like trees. 
 This example code is for our EMNLP'20 paper "Graph-to-Tree Neural Networks for Learning Structured Input-Output Translation with Applications to Semantic Parsing and Math Word Problem". You can access our paper via this link: https://arxiv.org/abs/2004.13781. 
